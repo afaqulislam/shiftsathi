@@ -1,10 +1,15 @@
-import sys
-from pathlib import Path
+﻿from fastapi import FastAPI
 
-# Ensure the backend package root is importable when Vercel runs this file
-# from the repository root.
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+app = FastAPI()
 
-from app.main import app  # noqa: E402
+@app.get('/')
+async def root():
+    return {'status': 'ok', 'msg': 'minimal app working'}
 
-# Vercel's Python runtime picks up `app` from this module.
+@app.get('/api/v1/health')
+async def health():
+    return {'status': 'ok', 'app': 'ShiftSathi API', 'env': 'vercel-minimal'}
+
+@app.api_route('/{path_name:path}', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])
+async def catch_all(path_name: str):
+    return {'path': path_name, 'msg': 'caught by minimal app'}
