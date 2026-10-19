@@ -1,0 +1,58 @@
+[project]
+name = "shiftsathi-backend"
+version = "0.1.0"
+description = "ShiftSathi API - AI-powered frontline operations and maintenance assistant"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.0",
+    "asyncpg>=0.32.0",
+    "bcrypt>=5.0.0",
+    "email-validator>=2.3.0",
+    "fastapi>=0.143.3",
+    "httpx>=0.28.1",
+    "pgvector>=0.5.1",
+    "pydantic>=2.14.1",
+    "pydantic-settings>=2.16.0",
+    "pypdf>=6.21.1",
+    "python-jose[cryptography]>=3.5.0",
+    "python-multipart>=0.0.32",
+    "redis>=5.0",
+    "sqlalchemy[asyncio]>=2.1.5",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "asgi-lifespan>=2.1.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "reportlab>=5.0.1",
+    "ruff>=0.17.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"alembic/versions/*" = ["I001", "E", "F"]
+"tests/*" = ["E", "F", "B"]
+# FastAPI dependency-injection defaults (Depends/Query/Path/...) are the
+# framework's documented idiom, so B008 does not apply to route modules.
+"app/api/**" = ["B008"]
+"app/core/deps.py" = ["B008"]

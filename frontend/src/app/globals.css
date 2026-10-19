@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ShiftSathi — Ethereal Glass design tokens (dark-first). */
+:root {
+  --background: #050506;
+  --foreground: #f4f4f6;
+  --surface: rgba(255, 255, 255, 0.028);
+  --surface-strong: rgba(255, 255, 255, 0.055);
+  --hairline: rgba(255, 255, 255, 0.09);
+  --muted: #8b8b95;
+  --faint: #5c5c66;
+
+  --accent: #1f1fff;
+  --accent-soft: rgba(64, 64, 255, 0.42);
+  --accent-glow: rgba(48, 48, 255, 0.5);
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #fb7185;
+  --info: #60a5fa;
+}
+
+* {
+  border-color: var(--hairline);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fixed radial mesh + grain. Fixed so blur/grain never repaints on scroll. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60rem 40rem at 12% -8%, rgba(48, 48, 255, 0.22), transparent 60%),
+    radial-gradient(48rem 36rem at 100% 0%, rgba(88, 28, 235, 0.16), transparent 58%),
+    radial-gradient(52rem 40rem at 50% 120%, rgba(12, 74, 210, 0.14), transparent 60%),
+    var(--background);
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: rgba(64, 64, 255, 0.35);
+}
+
+/* Thin, unobtrusive scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent-soft);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Double-bezel: outer machined shell + inner core. */
+  .bezel {
+    @apply rounded-4xl border border-white/[0.07] bg-white/[0.02] p-1.5 shadow-ambient;
+  }
+  .bezel-core {
+    @apply rounded-[calc(2rem-0.375rem)] border border-white/[0.06] bg-black/40 shadow-inner-hairline;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .glass {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+}

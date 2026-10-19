@@ -1,0 +1,41 @@
+# --- Secrets & local environment (NEVER commit these) ---
+.env
+.env.*
+!.env.example
+*.env.local
+backend/.env
+frontend/.env.local
+
+# --- Python / backend ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Node / frontend ---
+node_modules/
+.next/
+out/
+.turbo/
+next-env.d.ts
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Vercel ---
+.vercel/
+
+# --- Local scratch ---
+*.log
