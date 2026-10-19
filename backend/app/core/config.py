@@ -62,6 +62,12 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 12
     ALGORITHM: str = "HS256"
 
+    # --- API docs ---
+    # When left unset, interactive docs (/docs, /redoc, /openapi.json) follow
+    # the environment: enabled outside production, disabled in production.
+    # Set ENABLE_DOCS=true to expose them on a production deployment.
+    ENABLE_DOCS: bool | None = None
+
     # --- Database ---
     # Neon PostgreSQL connection string, e.g.
     # postgresql+asyncpg://user:pass@host/db?ssl=require
@@ -134,6 +140,10 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.ENVIRONMENT == "production"
+
+    @property
+    def docs_enabled(self) -> bool:
+        return self.ENABLE_DOCS if self.ENABLE_DOCS is not None else not self.is_production
 
 
 @lru_cache

@@ -1,4 +1,4 @@
-﻿# ShiftSathi
+# ShiftSathi
 
 AI-grounded frontline operations assistant for factories and workshops.
 

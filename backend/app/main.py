@@ -31,9 +31,9 @@ def create_app() -> FastAPI:
         title=settings.APP_NAME,
         version="0.1.0",
         lifespan=lifespan,
-        docs_url="/docs" if not settings.is_production else None,
-        redoc_url="/redoc" if not settings.is_production else None,
-        openapi_url="/openapi.json" if not settings.is_production else None,
+        docs_url="/docs" if settings.docs_enabled else None,
+        redoc_url="/redoc" if settings.docs_enabled else None,
+        openapi_url="/openapi.json" if settings.docs_enabled else None,
     )
 
     app.add_middleware(
@@ -52,7 +52,7 @@ def create_app() -> FastAPI:
         return {
             "app": settings.APP_NAME,
             "status": "running",
-            "docs": "/docs" if not settings.is_production else "disabled",
+            "docs": "/docs" if settings.docs_enabled else "disabled",
         }
 
     return app
